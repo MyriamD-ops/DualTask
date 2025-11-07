@@ -12,7 +12,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [TaskController::class,'index'])->name('welcome');
-    Route::get('/create', [ProfileController::class, 'create'])->name('create');
+    Route::get('/create', [TaskController::class, 'create'])->name('create');
+    Route::post('/create', [TaskController::class, 'store'])->name('store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

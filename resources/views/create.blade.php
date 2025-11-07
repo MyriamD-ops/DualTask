@@ -53,7 +53,7 @@
 <body>
     <h1>Ajouter une nouvelle tâche</h1>
     
-    <form action="{{route('contacts.store')}} " method="POST">
+    <form action="{{route('store')}} " method="POST">
         <!-- TODO: Ajouter un token CSRF -->
         @csrf
 
@@ -63,7 +63,9 @@
         <!-- TODO: Ajouter user id -->
         <label for="user_id">Utilisateur</label>
         <input type="text" id="user_id" name="user_id" placeholder="Entrez l pour admin, 2 pour user">
-
+        
+        <button type="submit">Ajouter</button>
+    </form>
             
     <a href="{{route('welcome')}}">Retour à la liste</a>
     

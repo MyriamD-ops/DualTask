@@ -2,8 +2,10 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
+            
         </h2>
     </x-slot>
+    
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -13,5 +15,15 @@
                 </div>
             </div>
         </div>
+        <div>
+            
+        <nav>
+    <ul>
+        <br>
+      <li class="font-semibold text-xl text-gray-800 leading-tight">
+            
+            <nav><a href="/">Sortir</a></li>
+    </ul>    
+   </nav>
     </div>
 </x-app-layout>

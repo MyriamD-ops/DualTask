@@ -17,12 +17,12 @@ class TaskController extends Controller
         return view ('welcome' , compact('tasks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
+     /* Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('create');
+        //
+         return view('welcome') ;
     }
 
     /**
@@ -33,9 +33,10 @@ class TaskController extends Controller
         $validated = $request->validate([
             'user_id' =>'required',
             'tache'=>'required',
-            'state'=>'required',
+          
         ]);
-        
+        $validated['user_id']=Auth::id();
+
         Task::create($validated);
         return redirect()->route('welcome')->with('success' , 'tâche crée avec succès');
 
@@ -44,14 +45,7 @@ class TaskController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        return view('create' , compact('task'));
-    }
-
+   
     /**
      * Show the form for editing the specified resource.
      */

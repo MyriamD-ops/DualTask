@@ -104,37 +104,29 @@
             </div>
         </div>
 
-        <!-- Formulaire d'ajout avec sélecteur de couleur -->
+        <!-- Formulaire d'ajout  -->
         <div class="glass-effect rounded-2xl p-6 mb-6 shadow-lg">
             <h2 class="text-xl font-semibold text-white mb-4">Ajouter une nouvelle tâche</h2>
             
-            <form id="taskForm">
+            <form id="taskForm" action="{{route('store')}} " method="POST">
+                 @csrf
                 <div class="mb-4">
                     <label for="taskName" class="block text-white/80 text-sm mb-2">Nom de la tâche</label>
-                    <input type="text" id="taskName" placeholder="Entrez le nom de la tâche..." 
+                    <input type="text" id="tache" name='tache'placeholder="Entrez le nom de la tâche..." 
                            class="w-full bg-white/10 text-white rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-white/60">
                 </div>
                 
                 <div class="mb-4">
                     <label for="taskId" class="block text-white/80 text-sm mb-2">Identifiant</label>
-                    <input type="text" id="taskId" placeholder="Entrez l'identifiant" 
+                    <input type="text" id="user_id" name='user_id' placeholder="Entrez l'identifiant" 
                            class="w-full bg-white/10 text-white rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-white/60">
                 </div>
                 
-                <div class="mb-6">
-                    <label class="block text-white/80 text-sm mb-3">Catégorie</label>
-                    <div class="flex space-x-3">
-                        <div class="color-option active" data-color="#FF6B6B" style="background-color: #FF6B6B;"></div>
-                        <div class="color-option" data-color="#4ECDC4" style="background-color: #4ECDC4;"></div>
-                        <div class="color-option" data-color="#45B7D1" style="background-color: #45B7D1;"></div>
-                        <div class="color-option" data-color="#96CEB4" style="background-color: #96CEB4;"></div>
-                    </div>
-                </div>
+                
                 
                 <div class="flex justify-between items-center">
-                    <a href="{{route('dashboard')}}" class="text-white/80 hover:text-white transition-colors flex items-center">
-                        <i class="fas fa-arrow-left mr-2"></i> Retour
-                    </a>
+                   
+                    
                     <button type="submit" class="btn-primary text-white font-medium py-3 px-6 rounded-xl flex items-center">
                         <i class="fas fa-check mr-2"></i> Valider
                     </button>
@@ -160,14 +152,7 @@
                 <!-- Tâches avec différentes couleurs -->
                 
                     
-                    <div class="flex space-x-2">
-                        <button class="text-white/70 hover:text-white transition-colors edit-task">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="text-white/70 hover:text-white transition-colors delete-task">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+                    
                 </div>
 
                 
@@ -202,30 +187,7 @@
             </div>
         </div>
 
-        <!-- Légende des couleurs -->
-        <div class="glass-effect rounded-2xl p-4 mt-6">
-            <p class="text-white/70 text-sm mb-2 text-center">Légende des couleurs :</p>
-            <div class="grid grid-cols-4 gap-2 text-xs text-white/70">
-                <div class="flex items-center justify-center">
-                    <div class="w-2 h-2 rounded-full bg-[#FF6B6B] mr-1"></div>
-                    <span>Urgent</span>
-                </div>
-                <div class="flex items-center justify-center">
-                    <div class="w-2 h-2 rounded-full bg-[#4ECDC4] mr-1"></div>
-                    <span>Travail</span>
-                </div>
-                <div class="flex items-center justify-center">
-                    <div class="w-2 h-2 rounded-full bg-[#45B7D1] mr-1"></div>
-                    <span>Personnel</span>
-                </div>
-                <div class="flex items-center justify-center">
-                    <div class="w-2 h-2 rounded-full bg-[#96CEB4] mr-1"></div>
-                    <span>Loisirs</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
+       
     <script>
         // Mise à jour de la date du jour
         document.getElementById('dateToday').textContent = new Date().toLocaleDateString('fr-FR', {
@@ -245,26 +207,9 @@
             });
         });
 
-        // Gestion de la soumission du formulaire
-        document.getElementById('taskForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const taskName = document.getElementById('taskName').value;
-            const taskId = document.getElementById('taskId').value;
-            
-            if (taskName && taskId) {
-                // Ici, vous pouvez ajouter la logique pour sauvegarder la tâche
-                alert(`Tâche "${taskName}" avec ID "${taskId}" ajoutée avec succès!`);
-                
-                // Réinitialiser le formulaire
-                document.getElementById('taskForm').reset();
-                colorOptions.forEach(opt => opt.classList.remove('active'));
-                document.querySelector('.color-option[data-color="#FF6B6B"]').classList.add('active');
-                selectedColor = '#FF6B6B';
-            } else {
-                alert('Veuillez remplir tous les champs!');
-            }
-        });
+
+
+
 
         // Animation d'apparition des éléments
         document.addEventListener('DOMContentLoaded', function() {

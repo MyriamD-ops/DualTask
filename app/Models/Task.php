@@ -20,10 +20,8 @@ class Task extends Model
      */
     protected $fillable = [
         'user_id',
-        'name',
-        'prenom',
-        'email',
-        'password',
+        'tache',
+        'state',
     ];
 // Liaison Eloquente belongs to pour lire la tache
 
