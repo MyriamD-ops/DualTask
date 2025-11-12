@@ -69,8 +69,8 @@
         <div class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-2xl font-bold text-white">Bonjour, Utilisateur</h1>
-                <a href="{{route('dashboard')}}" class="dashboard-link text-white/80 flex items-center text-sm mt-1">
-                    <i class="fas fa-arrow-left mr-2"></i> Retourner au Dashboard
+                <a href="{{route('welcome')}}" class="welcome-link text-white/80 flex items-center text-sm mt-1">
+                    <i class="fas fa-arrow-left mr-2"></i>Annuler
                 </a>
             </div>
             <div class="w-12 h-12 rounded-full glass-effect flex items-center justify-center text-white font-bold border border-white/20">
@@ -78,62 +78,13 @@
             </div>
         </div>
 
-        <!-- Cartes d'information -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="glass-effect text-white rounded-2xl p-4 shadow-lg">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-sm opacity-80">Tâches</p>
-                        <p class="text-2xl font-bold mt-1">{{ $tasks->count() }}</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="glass-effect text-white rounded-2xl p-4 shadow-lg">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-sm opacity-80">Aujourd'hui</p>
-                        <p class="text-lg font-bold mt-1" id="dateToday"></p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                        <i class="fas fa-calendar"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Formulaire d'ajout  -->
-        <div class="glass-effect rounded-2xl p-6 mb-6 shadow-lg">
-            <h2 class="text-xl font-semibold text-white mb-4">Ajouter une nouvelle tâche</h2>
-            
-            <form id="taskForm" action="{{ route('store') }}" method="POST">
-                @csrf
-                <div class="mb-4">
-                    <label for="taskName" class="block text-white/80 text-sm mb-2">Nom de la tâche</label>
-                    <input type="text" id="tache" name="tache" placeholder="Entrez le nom de la tâche..." 
-                           class="w-full bg-white/10 text-white rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-white/60">
-                </div>
-                
-                <div class="mb-4">
-                    <label for="taskId" class="block text-white/80 text-sm mb-2">Identifiant</label>
-                    <input type="text" id="user_id" name="user_id" placeholder="Entrez l'identifiant" 
-                           class="w-full bg-white/10 text-white rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-white/60">
-                </div>
-                
-                <div class="flex justify-between items-center">
-                    <button type="submit" class="btn-primary text-white font-medium py-3 px-6 rounded-xl flex items-center">
-                        <i class="fas fa-check mr-2"></i> Valider
-                    </button>
-                </div>
-            </form>
-        </div>
+       
 
-        <!-- Liste des tâches -->
+        <!-- Mise à jour de tâche -->
         <div class="glass-effect rounded-2xl p-6 shadow-lg">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-white">Mes Tâches</h2>
+                <h2 class="text-xl font-semibold text-white">Mettre à jour</h2>
                 <div class="flex space-x-2">
                     <button class="text-white/70 hover:text-white transition-colors" id="sortByColor">
                         <i class="fas fa-palette"></i>
@@ -145,8 +96,9 @@
             </div>
 
             <div id="taskList" class="space-y-3">
+            
                 <!-- Exemple de tâche avec données dynamiques -->
-                @forelse ($tasks as $task)
+                
                 <div class="task-item bg-white/10 rounded-xl p-4 flex items-center justify-between" style="border-left: 4px solid #96CEB4;">
                     <div class="flex items-center">
                         <div class="task-color-indicator" style="background-color: #96CEB4;"></div>
@@ -166,30 +118,25 @@
                                     class="text-white/70 hover:text-white transition-colors edit-task">
                                 <i class="fas fa-edit"></i>            
                                 </button> 
-                            </form> 
-                            
-                        
-
-                        <!-- Bouton Supprimer  -->
-                                
-                            <form method="POST" action="{{ route('task.destroy', $task) }}" class="inline">
-                                @csrf
-                                @method('DELETE')                                
-                            <button type="submit" class="text-white/70 hover:text-white transition-colors delete-task" 
-                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">
-                                <i class="fas fa-trash"></i>                
-                                </button> 
-                            </form>                           
-                            </div>
-                           </div>
-                @empty
-                <div id="emptyState" class="text-center py-8">
-                    <i class="fas fa-check-circle text-4xl text-white/50 mb-3"></i>
-                    <p class="text-white/70">Aucune tâche pour le moment. Ajoute ta première tâche !</p>
+                            </form>   
+                </div>           
                 </div>
-                @endforelse
-            </div>
-        </div>
+
+
+                <div>
+                    <form action="{{ route('task.update', $task->id) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    @section('content')
+                    <h1><input type="text" name="title" value="{{ $task->title }}"></h1>
+                    <p>{{ $task->state }}</p>
+                    @endsection
+                    <button type="submit">Valider</button>
+                    </form>    
+                    </div>
+
+                </div>
+                      
     
 
     <script>
@@ -214,17 +161,6 @@
             });
         });
 
-        // Confirmation de suppression améliorée
-        document.querySelectorAll('form[method="POST"]').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                if (this.method === 'DELETE') {
-                    e.preventDefault();
-                    if (confirm('Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.')) {
-                        this.submit();
-                    }
-                }
-            });
-        });
     </script>
 </body>
 </html>

@@ -16,10 +16,24 @@
         <br>
         @forelse ($tasks as $task )
         {{$task->tache}}    <br>
-            
+        <a href="{{ route('welcome', $task->id) }}" class="text-white/70 hover:text-white">
+        <i class="fas fa-edit"></i>
+        </a>    
+   
+
+
         @empty
         Vous n'avez pas de tâches
         @endforelse
+
+
+
+
+
+
+
+
+
 
 
     </div>

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
 {
@@ -18,17 +16,6 @@ class TaskController extends Controller
         $tasks = Task::where('user_id', Auth::user()->id)->get();
         return view ('welcome' , compact('tasks'));
     }
-
-
-    // Display a specific resource.
-
-    public function show(Task $task)
-{
-    return view('task.show', compact('task'));
-}
-
-
-
 
      /* Show the form for creating a new resource.
      */
@@ -63,33 +50,29 @@ class TaskController extends Controller
         
     $task = Task::findOrFail($id);
     
-    return view('edit', compact('task'));
-    }
+    return view('Task.edit', compact('task'));
+}
 
     
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $id)
-     {
-        $task = Task::find($id);
-       Task::where('id', 8)->update([
-    'state' => '1',
-  
-]);
-        return redirect()->route('welcome')->with('success', 'Tâche mise à jour !');
+    public function update(Request $request, string $id)
+    {
+       $task = Task::findOrFail($id);
+   
+    $task->update($request->validate([
+        'tache' => 'required|string|max:255',
+    ]));
+    return redirect()->route('welcome')->with('success', 'Tâche mise à jour !');
     }
-
-
 
     /**
      * Remove the specified resource from storage.
      */
-   public function destroy(Task $task)
-{
-   $task->delete();
-    return redirect()->route('welcome')->with('success', 'Tâche supprimée !');
+    public function destroy(string $id)
+    {
+        //
+    }
 }
-}
-
